@@ -1,11 +1,14 @@
 pipeline {
+        agent  any
+        stage("Env Variables") {
 script {
         env.AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')   
         env.Dummy = "Some thing"
         
     }
-        agent  any
+        }
+        
 
 stages {
         stage('checkout') {
