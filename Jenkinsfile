@@ -21,7 +21,7 @@ stages {
         stage('Stage 1') {
             steps {
                 echo 'Hello world!'
-                    echo "${env.Dummy}" 
+                    echo "${env.AWS_ACCESS_KEY_ID} and ${env.AWS_SECRET_ACCESS_KEY}" 
             }
         }
 }
