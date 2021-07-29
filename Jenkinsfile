@@ -28,7 +28,7 @@ steps {
                 echo 'Hello world!'
                     echo "${env.Dummy}"
                     bat 'echo  stage1 steps'
-                   // bat 'aws --version'
+                   bat 'aws --version'
                 //AWS("sts get-caller-identity")
                     //echo "${env.AWS_ACCESS_KEY_ID} and ${env.AWS_SECRET_ACCESS_KEY}" 
             }
