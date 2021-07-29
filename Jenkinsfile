@@ -1,7 +1,5 @@
-@Library('github.com/releaseworks/jenkinslib') _
-
 pipeline {
-        agent  any
+        agent  any        
         stages {
         stage("Env Variables") {
 steps {
@@ -14,8 +12,6 @@ steps {
     }
         }
         
-
-
         stage('checkout') {
             steps {
                  script{
@@ -25,16 +21,20 @@ steps {
                         
                     }
                 }
-            }        
+            } 
+                
+node ('master')
+                {
         stage('Stage 1') {
             steps {
                 echo 'Hello world!'
                     echo "${env.Dummy}"
-                    aws --version
+                    bat 'aws --version'
                 //AWS("sts get-caller-identity")
                     //echo "${env.AWS_ACCESS_KEY_ID} and ${env.AWS_SECRET_ACCESS_KEY}" 
             }
         }
+                }
 }
         
 }
