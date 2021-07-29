@@ -27,8 +27,8 @@ steps {
             steps {
                 echo 'Hello world!'
                     echo "${env.Dummy}"
-                    bat 'echo  stage1 steps'
-                   bat 'aws --version'
+                    sh 'echo  stage1 steps'
+                   sh 'aws --version'
                 //AWS("sts get-caller-identity")
                     //echo "${env.AWS_ACCESS_KEY_ID} and ${env.AWS_SECRET_ACCESS_KEY}" 
             }
@@ -46,7 +46,7 @@ steps {
                 env.CIUUID = props.CIUUID
             }
 
-            bat "echo The CI UUID is $CIUUID" 
+            sh "echo The CI UUID is $CIUUID" 
         }
                 }
                 
