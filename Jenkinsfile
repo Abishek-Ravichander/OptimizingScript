@@ -41,12 +41,12 @@ steps {
             uuidgen>>prop.properties
             '''
 
-            script {
-                def props = readProperties file: 'prop.properties'
-                env.CIUUID = props.CIUUID
-            }
+            //script {
+              //  def props = readProperties file: 'prop.properties'
+                //env.CIUUID = props.CIUUID
+            //}
 
-            bat "echo The CI UUID is $CIUUID"   
+            //bat "echo The CI UUID is $CIUUID" 
         }
                 }
                 
