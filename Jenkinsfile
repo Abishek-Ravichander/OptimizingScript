@@ -47,6 +47,27 @@ steps {
             }
 
             sh "echo The CI UUID is $CIUUID" 
+                // Clean up
+            sh'''#!/bin/bash
+            echo "\n---> whoami"
+            whoami
+            echo "\n---> List of files"
+            ls -a
+            echo "\n Removing .terraform files for clean execution"
+            find . -name "*.terraform*" -exec rm -rf {} \\;
+            find . -name "*.tfstate*" -exec rm -rf {} \\;
+            find . -name "*plan.out*" -exec rm -rf {} \\;
+            find . -name "*.log*" -exec rm -rf {} \\;
+            find . -name "*terraform-security-rules*" -exec rm -rf {} \\;
+
+            echo "\n---> List of files (After cleanup)"
+            ls -a
+            echo "\n---> Check Root Files" 
+            ls / -a
+            echo "\n---> Check Version"
+            python --version
+            terraform --version
+            '''
         }
                 }
                 
