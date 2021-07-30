@@ -54,11 +54,9 @@ steps {
             echo "\n---> List of files"
             ls -a
             echo "\n Removing .terraform files for clean execution"
-            find . -name "*.terraform*" -exec rm -rf {} \\;
-            find . -name "*.tfstate*" -exec rm -rf {} \\;
-            find . -name "*plan.out*" -exec rm -rf {} \\;
-            find . -name "*.log*" -exec rm -rf {} \\;
-            find . -name "*terraform-security-rules*" -exec rm -rf {} \\;
+            dir /s "*.log";
+            dir /s "*.terraform*";
+            dir /s -name "*.tfstate*"
 
             echo "\n---> List of files (After cleanup)"
             ls -a
