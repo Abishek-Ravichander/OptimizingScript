@@ -1,0 +1,3 @@
+region: us-east-1 # If you define regions in the providers in Terraform, this region will be overwritten
+roleName: JenkinsMembrRole  # UPDATE THIS # Role to assume for credentials
+accountId: '' # UPDATE THIS
