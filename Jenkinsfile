@@ -70,6 +70,12 @@ steps {
             '''
         }
                 }
+                stage('Set Environment Variables') {        
+        steps {
+            sh "echo The Branch name is $BRANCH_NAME"
+        }
+                }
+                
                 
                  
                 
