@@ -72,7 +72,18 @@ steps {
                 }
                 stage('Set Environment Variables') {        
         steps {
-            sh "echo The Branch name is $BRANCH_NAME"
+            sh "echo The Branch name is"
+                 script {
+                def datas = readYaml file: 'deployment.yaml'
+                env.REGION = datas.region
+                env.ACCOUNTID = datas.accountId
+                env.ROLENAME = datas.roleName
+                env.ROLE="arn:aws:iam::" + env.ACCOUNTID + ":role/" + env.ROLENAME 
+            }
+
+            sh "echo The region is $REGION" 
+            sh "echo The Account Id is $ACCOUNTID"
+            sh "echo The Role is $ROLE"
         }
                 }
                 
