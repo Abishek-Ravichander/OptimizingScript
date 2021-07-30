@@ -110,7 +110,34 @@ steps {
         }
     }
                 
-                 
+    stage('Validate Plan') {
+        steps {
+            sh'''#!/bin/bash
+            export AWS_DEFAULT_REGION="$REGION"
+            echo $AWS_DEFAULT_REGION
+            export ROLE="$ROLE"
+            echo "===== assuming permissions => $ROLE ====="
+            account_role=`aws sts assume-role --role-arn $ROLE --role-session-name "jenkins-valkyrie-$CIUUID"`
+            export AWS_ACCESS_KEY_ID=$(echo $account_role | jq -r .Credentials.AccessKeyId)
+            export AWS_SECRET_ACCESS_KEY=$(echo $account_role | jq -r .Credentials.SecretAccessKey)
+            export AWS_SESSION_TOKEN=$(echo $account_role | jq -r .Credentials.SessionToken)
+            export AWS_SECURITY_TOKEN=$(echo $account_role | jq -r .Credentials.SessionToken)
+            
+            echo "\nChanging the directory..."
+            cd root
+            pwd
+            set -e
+            echo "\nTerraform Format..."
+            terraform fmt -recursive
+            echo "\nTerraform Validate..."
+            terraform validate
+            echo "\nTerraform Plan..."
+            terraform plan -out=plan.out
+            echo "\n----> Resources will be deployed to $ACCOUNTID\n"
+            '''
+            // tf compliance --> requires terraform plan output file
+        }
+    }             
                 
 }
         
