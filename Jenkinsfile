@@ -54,9 +54,11 @@ steps {
             echo "\n---> List of files"
             ls -a
             echo "\n Removing .terraform files for clean execution"
-            dir /s "*.log";
-            dir /s "*.terraform*";
-            dir /s -name "*.tfstate*"
+            find . -name "*.terraform*" -exec rm -rf {} \\;
+            find . -name "*.tfstate*" -exec rm -rf {} \\;
+            find . -name "*plan.out*" -exec rm -rf {} \\;
+            find . -name "*.log*" -exec rm -rf {} \\;
+            find . -name "*terraform-security-rules*" -exec rm -rf {} \\;
 
             echo "\n---> List of files (After cleanup)"
             ls -a
@@ -68,6 +70,24 @@ steps {
             '''
         }
                 }
+                
+                 stage('Set Environment Variables') {        
+        steps {
+            sh "echo The Branch name is $BRANCH_NAME"
+    
+            script {
+                def datas = readYaml file: 'deployment.yaml'
+                env.REGION = datas.region
+                env.ACCOUNTID = datas.accountId
+                env.ROLENAME = datas.roleName
+                env.ROLE="arn:aws:iam::" + env.ACCOUNTID + ":role/" + env.ROLENAME 
+            }
+
+            sh "echo The region is $REGION" 
+            sh "echo The Account Id is $ACCOUNTID"
+            sh "echo The Role is $ROLE"
+        }
+    }
                 
 }
         
