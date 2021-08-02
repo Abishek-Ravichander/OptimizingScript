@@ -1,16 +1,17 @@
 pipeline {
+         environment{
+                        AWS_DEFAULT_REGION="us-east-1"
+        
+         THE_BUTLER_SAYS_SO = credentials('darinpope-aws-creds')        
+        
+                }
         agent  any        
         stages {
         stage("Env Variables") {
 steps {
         script {
-                environment{
-                        export AWS_DEFAULT_REGION=us-east-1
-        //env.AWS_ACCESS_KEY_ID     = credentials('AWS_SCRIPT_OP_ID')
+               //env.AWS_ACCESS_KEY_ID     = credentials('AWS_SCRIPT_OP_ID')
         //env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SCRIPT_OP_KEY') 
-         THE_BUTLER_SAYS_SO = credentials('darinpope-aws-creds')        
-        
-                }
         }
         
     }
