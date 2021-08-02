@@ -12,7 +12,7 @@ steps {
         script {
                //env.AWS_ACCESS_KEY_ID     = credentials('AWS_SCRIPT_OP_ID')
         //env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SCRIPT_OP_KEY') 
-        }
+        
         
     }
         }
