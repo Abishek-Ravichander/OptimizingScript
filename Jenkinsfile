@@ -4,8 +4,8 @@ pipeline {
         stage("Env Variables") {
 steps {
         script {
-        env.AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')   
+        env.AWS_ACCESS_KEY_ID     = credentials('AWS_SCRIPT_OP_ID')
+        env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SCRIPT_OP_KEY')   
         env.Dummy = "Some thing"
         }
         
@@ -23,16 +23,16 @@ steps {
                 }
             } 
                 
-        stage('Sample') {
-            steps {
-                echo 'Hello world!'
-                    echo "${env.Dummy}"
-                    sh 'echo  stage1 steps'
-                   sh 'aws --version'
+       // stage('Sample') {
+         //   steps {
+           //     echo 'Hello world!'
+             //       echo "${env.Dummy}"
+               //     sh 'echo  stage1 steps'
+                 //  sh 'aws --version'
                 //AWS("sts get-caller-identity")
                     //echo "${env.AWS_ACCESS_KEY_ID} and ${env.AWS_SECRET_ACCESS_KEY}" 
-            }
-        }
+            //}
+        //}
                 stage('Pre-build'){
         steps {
             sh '''#!/bin/bash
