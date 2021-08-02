@@ -80,7 +80,8 @@ steps {
                 env.ROLENAME = datas.roleName
                 env.ROLE="arn:aws:iam::" + env.ACCOUNTID + ":role/" + env.ROLENAME 
             }
-
+            
+            sh "echo The AccountID is $ACCOUNTID"
             sh "echo The region is $REGION" 
             sh "echo The Account Id is $ACCOUNTID"
             sh "echo The Role is $ROLE"
