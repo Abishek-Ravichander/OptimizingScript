@@ -3,10 +3,11 @@ pipeline {
         stages {
         stage("Env Variables") {
 steps {
-        script {
-        env.AWS_ACCESS_KEY_ID     = credentials('AWS_SCRIPT_OP_ID')
-        env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SCRIPT_OP_KEY') 
-        env.AWS_DEFAULT_REGION   = "us-east-1"
+        environment {
+        //env.AWS_ACCESS_KEY_ID     = credentials('AWS_SCRIPT_OP_ID')
+        //env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SCRIPT_OP_KEY') 
+         THE_BUTLER_SAYS_SO = credentials('darinpope-aws-creds')        
+        AWS_DEFAULT_REGION   = "us-east-1"
         
         }
         
