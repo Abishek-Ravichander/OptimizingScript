@@ -4,14 +4,16 @@ pipeline {
         stage("Env Variables") {
 steps {
         script {
-        env.AWS_ACCESS_KEY_ID     = credentials('ROLE_KEY')
-        env.AWS_SECRET_ACCESS_KEY = credentials('ROLE_SECRET_KEY')   
-        env.Dummy = "Some thing"
+        env.AWS_ACCESS_KEY_ID     = credentials('AWS_SCRIPT_OP_ID')
+        env.AWS_SECRET_ACCESS_KEY = credentials('AWS_SCRIPT_OP_KEY')   
+        
         }
         
     }
         }
         
+                
+                
         stage('checkout') {
             steps {
                  script{
@@ -23,16 +25,19 @@ steps {
                 }
             } 
                 
-       // stage('Sample') {
-         //   steps {
+        stage('Sample') {
+            steps {
            //     echo 'Hello world!'
              //       echo "${env.Dummy}"
                //     sh 'echo  stage1 steps'
-                 //  sh 'aws --version'
+                   sh '''
+                   aws --version
+                   aws ec2 describe-instances
+                   '''
                 //AWS("sts get-caller-identity")
                     //echo "${env.AWS_ACCESS_KEY_ID} and ${env.AWS_SECRET_ACCESS_KEY}" 
-            //}
-        //}
+            }
+        }
                 stage('Pre-build'){
         steps {
             sh '''#!/bin/bash
@@ -95,11 +100,7 @@ steps {
             echo $AWS_DEFAULT_REGION
             export ROLE="$ROLE"
             echo "===== assuming permissions => $ROLE ====="
-            
-            unset AWS_ACCESS_KEY_ID
-            unset AWS_SECRET_ACCESS_KEY
-            unset AWS_SESSION_TOKEN
-            
+                        
             account_role=`aws sts assume-role --role-arn $ROLE --role-session-name "jenkins-valkyrie-$CIUUID"`
             export AWS_ACCESS_KEY_ID=$(echo $account_role | credentials('AWS_ACCESS_KEY_ID'))
             export AWS_SECRET_ACCESS_KEY=$(echo $account_role | credentials('AWS_SECRET_ACCESS_KEY'))
@@ -122,11 +123,7 @@ steps {
             export AWS_DEFAULT_REGION="$REGION"
             echo $AWS_DEFAULT_REGION
             export ROLE="$ROLE"
-            echo "===== assuming permissions => $ROLE ====="
-            unset AWS_ACCESS_KEY_ID
-            unset AWS_SECRET_ACCESS_KEY
-            unset AWS_SESSION_TOKEN
-            
+            echo "===== assuming permissions => $ROLE ====="            
             account_role=`aws sts assume-role --role-arn $ROLE --role-session-name "jenkins-valkyrie-$CIUUID"`
             export AWS_ACCESS_KEY_ID=$(echo $account_role | jq -r .Credentials.AccessKeyId)
             export AWS_SECRET_ACCESS_KEY=$(echo $account_role | jq -r .Credentials.SecretAccessKey)
